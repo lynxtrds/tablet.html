@@ -3,73 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <title>How Much is Your Mind Costing You? - Tablet</title>
+  <!-- Fuente Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap">
   <style>
-    body {
-      background-color: #1c1c1c;
+    /* Fijar dimensiones fijas sin scrollbars */
+    html, body {
+      width: 726px;
+      height: 466px;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #FFFFFF; /* Fondo blanco */
       font-family: 'Inter', sans-serif;
-      color: #fff;
+      color: #2E2E2E;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 0;
-      padding: 20px;
-      height: 100vh;
       text-align: center;
     }
+    /* Contenedor principal */
     .container {
-      max-width: 700px;
+      width: 726px;
+      height: 466px;
+      box-sizing: border-box;
       padding: 20px;
     }
+    /* Título y subtítulo */
     .title {
       font-size: 35px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
     .subtitle {
       font-size: 17px;
-      color: #ccc;
-      margin-bottom: 50px;
+      color: #444;
+      margin-bottom: 20px;
     }
+    /* Recuadro del widget */
     .typewriter-section {
       position: relative;
       display: inline-block;
-      background-color: #1c1c1c;
+      background-color: #1c1c1c; /* Fondo oscuro para el widget */
       border: 2px solid #444;
       border-radius: 15px;
-      padding: 25px;
-      min-width: 500px;
-      min-height: 140px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      padding: 20px;
+      width: 90%;
+      max-width: 600px;
+      min-height: 160px;
+      margin: 0 auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+    /* Texto del widget */
     .typewriter-text {
-      font-size: 18px;
+      font-size: 16px;
       color: #F7F7F7;
       outline: none;
+      text-align: center;
     }
-    .cursor {
-      display: inline-block;
-      width: 2px;
-      height: 1.1em;
-      background-color: #F7F7F7;
-      margin-left: 2px;
-      animation: blink 0.7s infinite;
-      vertical-align: bottom;
-    }
-    @keyframes blink {
-      0%, 50% { opacity: 1; }
-      51%, 100% { opacity: 0; }
-    }
+    /* Botón "Send" */
     .action-button {
       position: absolute;
-      bottom: 15px;
-      right: 15px;
+      bottom: 10px;
+      right: 10px;
       background-color: #F7F7F7;
       color: #1c1c1c;
       border: none;
-      border-radius: 20px;
+      border-radius: 15px;
       padding: 6px 12px;
-      font-size: 14px;
+      font-size: 0.8rem;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
       transition: background-color 0.2s ease;
@@ -85,29 +86,35 @@
     <p class="subtitle">Unlock Your Emotional ROI in Just 1 Minute.</p>
     <div class="typewriter-section">
       <div id="typewriter" class="typewriter-text" contentEditable="true"></div>
-      <span class="cursor"></span>
       <button id="actionButton" class="action-button">Send</button>
     </div>
   </div>
   
   <script>
+    // Frases a rotar (las preguntas)
     const phrases = [
       "How often do emotions influence your financial decisions?",
       "How much have you lost to emotional decisions in the past 6 months?",
       "How much time do you spend analyzing your emotions weekly?",
       "How confident are you in your financial decisions?"
     ];
+    
     const typewriterEl = document.getElementById("typewriter");
     let phraseIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
     let timeoutId;
-    const typingSpeed = 50;
-    const deletingSpeed = 20;
-    const pauseDelay = 1000;
+    
+    const typingSpeed = 50;    // ms entre cada letra al escribir
+    const deletingSpeed = 20;  // ms entre cada letra al borrar
+    const pauseDelay = 1000;   // pausa al terminar una frase
+    
     function type() {
+      // Si el usuario tiene el foco en el campo editable, detiene la animación
       if (document.activeElement === typewriterEl) return;
+      
       const currentPhrase = phrases[phraseIndex];
+      
       if (!isDeleting) {
         typewriterEl.textContent = currentPhrase.substring(0, charIndex + 1);
         charIndex++;
@@ -126,8 +133,11 @@
       const delay = isDeleting ? deletingSpeed : typingSpeed;
       timeoutId = setTimeout(type, delay);
     }
+    
     document.addEventListener("DOMContentLoaded", () => { setTimeout(type, 500); });
+    
     typewriterEl.addEventListener("focus", () => { clearTimeout(timeoutId); });
+    
     typewriterEl.addEventListener("blur", () => {
       typewriterEl.textContent = "";
       charIndex = 0;
@@ -135,9 +145,11 @@
       phraseIndex = (phraseIndex + 1) % phrases.length;
       setTimeout(type, 500);
     });
+    
     document.getElementById("actionButton").addEventListener("click", () => {
       alert("Button clicked! Implement your functionality here.");
     });
   </script>
 </body>
 </html>
+
