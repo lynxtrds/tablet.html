@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>How Much is Your Mind Costing You? - Tablet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap">
+  <style>
+    body {
+      background-color: #1c1c1c;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      padding: 20px;
+      height: 100vh;
+      text-align: center;
+    }
+    .container {
+      max-width: 700px;
+      padding: 20px;
+    }
+    .title {
+      font-size: 35px;
+      margin-bottom: 30px;
+    }
+    .subtitle {
+      font-size: 17px;
+      color: #ccc;
+      margin-bottom: 50px;
+    }
+    .typewriter-section {
+      position: relative;
+      display: inline-block;
+      background-color: #1c1c1c;
+      border: 2px solid #444;
+      border-radius: 15px;
+      padding: 25px;
+      min-width: 500px;
+      min-height: 140px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .typewriter-text {
+      font-size: 18px;
+      color: #F7F7F7;
+      outline: none;
+    }
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background-color: #F7F7F7;
+      margin-left: 2px;
+      animation: blink 0.7s infinite;
+      vertical-align: bottom;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+    .action-button {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      background-color: #F7F7F7;
+      color: #1c1c1c;
+      border: none;
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      transition: background-color 0.2s ease;
+    }
+    .action-button:hover {
+      background-color: #e2e2e2;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">How Much is Your Mind Costing You? Find Out Now</h1>
+    <p class="subtitle">Unlock Your Emotional ROI in Just 1 Minute.</p>
+    <div class="typewriter-section">
+      <div id="typewriter" class="typewriter-text" contentEditable="true"></div>
+      <span class="cursor"></span>
+      <button id="actionButton" class="action-button">Send</button>
+    </div>
+  </div>
+  
+  <script>
+    const phrases = [
+      "How often do emotions influence your financial decisions?",
+      "How much have you lost to emotional decisions in the past 6 months?",
+      "How much time do you spend analyzing your emotions weekly?",
+      "How confident are you in your financial decisions?"
+    ];
+    const typewriterEl = document.getElementById("typewriter");
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let timeoutId;
+    const typingSpeed = 50;
+    const deletingSpeed = 20;
+    const pauseDelay = 1000;
+    function type() {
+      if (document.activeElement === typewriterEl) return;
+      const currentPhrase = phrases[phraseIndex];
+      if (!isDeleting) {
+        typewriterEl.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
+        if (charIndex === currentPhrase.length) {
+          timeoutId = setTimeout(() => { isDeleting = true; type(); }, pauseDelay);
+          return;
+        }
+      } else {
+        typewriterEl.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
+        if (charIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+        }
+      }
+      const delay = isDeleting ? deletingSpeed : typingSpeed;
+      timeoutId = setTimeout(type, delay);
+    }
+    document.addEventListener("DOMContentLoaded", () => { setTimeout(type, 500); });
+    typewriterEl.addEventListener("focus", () => { clearTimeout(timeoutId); });
+    typewriterEl.addEventListener("blur", () => {
+      typewriterEl.textContent = "";
+      charIndex = 0;
+      isDeleting = false;
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      setTimeout(type, 500);
+    });
+    document.getElementById("actionButton").addEventListener("click", () => {
+      alert("Button clicked! Implement your functionality here.");
+    });
+  </script>
+</body>
+</html>
